@@ -622,3 +622,13 @@
 #define SYS_process_vm_writev __NR_process_vm_writev
 #define SYS_setsockopt __NR_setsockopt
 #define SYS_getsockopt __NR_getsockopt
+
+#undef SYS_fstatat
+#undef SYS_pread
+#undef SYS_pwrite
+#undef SYS_getdents
+#define SYS_fstatat SYS_newfstatat
+#define SYS_pread SYS_pread64
+#define SYS_pwrite SYS_pwrite64
+#define SYS_getdents SYS_getdents64
+#define SYS_fadvise SYS_fadvise64

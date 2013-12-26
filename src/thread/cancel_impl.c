@@ -8,12 +8,17 @@ void __cancel()
 	pthread_exit(PTHREAD_CANCELED);
 }
 
-long __syscall_cp_asm(volatile void *, long, long, long, long, long, long, long);
+#ifdef __ILP32__
+#define __sl long long
+#else
+#define __sl long
+#endif
+__sl __syscall_cp_asm(volatile void *, __sl, __sl, __sl, __sl, __sl, __sl, __sl);
 
-long (__syscall_cp)(long nr, long u, long v, long w, long x, long y, long z)
+__sl (__syscall_cp)(__sl nr, __sl u, __sl v, __sl w, __sl x, __sl y, __sl z)
 {
 	pthread_t self;
-	long r;
+	__sl r;
 
 	if (!libc.main_thread || (self = __pthread_self())->canceldisable)
 		return __syscall(nr, u, v, w, x, y, z);

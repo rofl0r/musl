@@ -4,19 +4,26 @@
 #if defined(__PIC__) && (100*__GNUC__+__GNUC_MINOR__ >= 303)
 __attribute__((visibility("protected")))
 #endif
-long __syscall_ret(unsigned long), __syscall(long, ...),
-	__syscall_cp(long, long, long, long, long, long, long);
+
+#ifdef __ILP32__
+#define __sl long long
+#else
+#define __sl long
+#endif
+
+__sl __syscall_ret(unsigned __sl), __syscall(__sl, ...),
+	__syscall_cp(__sl, __sl, __sl, __sl, __sl, __sl, __sl);
 
 #include <sys/syscall.h>
 #include "syscall_arch.h"
 
-#define __syscall1(n,a) __syscall1(n,(long)(a))
-#define __syscall2(n,a,b) __syscall2(n,(long)(a),(long)(b))
-#define __syscall3(n,a,b,c) __syscall3(n,(long)(a),(long)(b),(long)(c))
-#define __syscall4(n,a,b,c,d) __syscall4(n,(long)(a),(long)(b),(long)(c),(long)(d))
-#define __syscall5(n,a,b,c,d,e) __syscall5(n,(long)(a),(long)(b),(long)(c),(long)(d),(long)(e))
-#define __syscall6(n,a,b,c,d,e,f) __syscall6(n,(long)(a),(long)(b),(long)(c),(long)(d),(long)(e),(long)(f))
-#define __syscall7(n,a,b,c,d,e,f,g) (__syscall)(n,(long)(a),(long)(b),(long)(c),(long)(d),(long)(e),(long)(f),(long)g)
+#define __syscall1(n,a) __syscall1(n,(__sl)(a))
+#define __syscall2(n,a,b) __syscall2(n,(__sl)(a),(__sl)(b))
+#define __syscall3(n,a,b,c) __syscall3(n,(__sl)(a),(__sl)(b),(__sl)(c))
+#define __syscall4(n,a,b,c,d) __syscall4(n,(__sl)(a),(__sl)(b),(__sl)(c),(__sl)(d))
+#define __syscall5(n,a,b,c,d,e) __syscall5(n,(__sl)(a),(__sl)(b),(__sl)(c),(__sl)(d),(__sl)(e))
+#define __syscall6(n,a,b,c,d,e,f) __syscall6(n,(__sl)(a),(__sl)(b),(__sl)(c),(__sl)(d),(__sl)(e),(__sl)(f))
+#define __syscall7(n,a,b,c,d,e,f,g) (__syscall)(n,(__sl)(a),(__sl)(b),(__sl)(c),(__sl)(d),(__sl)(e),(__sl)(f),(__sl)g)
 
 #define __SYSCALL_NARGS_X(a,b,c,d,e,f,g,h,n,...) n
 #define __SYSCALL_NARGS(...) __SYSCALL_NARGS_X(__VA_ARGS__,7,6,5,4,3,2,1,0,)
@@ -31,12 +38,12 @@ long __syscall_ret(unsigned long), __syscall(long, ...),
 #define socketcall_cp __socketcall_cp
 
 #define __syscall_cp0(n) (__syscall_cp)(n,0,0,0,0,0,0)
-#define __syscall_cp1(n,a) (__syscall_cp)(n,(long)(a),0,0,0,0,0)
-#define __syscall_cp2(n,a,b) (__syscall_cp)(n,(long)(a),(long)(b),0,0,0,0)
-#define __syscall_cp3(n,a,b,c) (__syscall_cp)(n,(long)(a),(long)(b),(long)(c),0,0,0)
-#define __syscall_cp4(n,a,b,c,d) (__syscall_cp)(n,(long)(a),(long)(b),(long)(c),(long)(d),0,0)
-#define __syscall_cp5(n,a,b,c,d,e) (__syscall_cp)(n,(long)(a),(long)(b),(long)(c),(long)(d),(long)(e),0)
-#define __syscall_cp6(n,a,b,c,d,e,f) (__syscall_cp)(n,(long)(a),(long)(b),(long)(c),(long)(d),(long)(e),(long)(f))
+#define __syscall_cp1(n,a) (__syscall_cp)(n,(__sl)(a),0,0,0,0,0)
+#define __syscall_cp2(n,a,b) (__syscall_cp)(n,(__sl)(a),(__sl)(b),0,0,0,0)
+#define __syscall_cp3(n,a,b,c) (__syscall_cp)(n,(__sl)(a),(__sl)(b),(__sl)(c),0,0,0)
+#define __syscall_cp4(n,a,b,c,d) (__syscall_cp)(n,(__sl)(a),(__sl)(b),(__sl)(c),(__sl)(d),0,0)
+#define __syscall_cp5(n,a,b,c,d,e) (__syscall_cp)(n,(__sl)(a),(__sl)(b),(__sl)(c),(__sl)(d),(__sl)(e),0)
+#define __syscall_cp6(n,a,b,c,d,e,f) (__syscall_cp)(n,(__sl)(a),(__sl)(b),(__sl)(c),(__sl)(d),(__sl)(e),(__sl)(f))
 
 #define __syscall_cp(...) __SYSCALL_DISP(__syscall_cp,__VA_ARGS__)
 #define syscall_cp(...) __syscall_ret(__syscall_cp(__VA_ARGS__))
@@ -46,9 +53,9 @@ long __syscall_ret(unsigned long), __syscall(long, ...),
 #define __socketcall_cp(nm,a,b,c,d,e,f) syscall_cp(SYS_##nm, a, b, c, d, e, f)
 #else
 #define __socketcall(nm,a,b,c,d,e,f) syscall(SYS_socketcall, __SC_##nm, \
-    ((long [6]){ (long)a, (long)b, (long)c, (long)d, (long)e, (long)f }))
+    ((__sl [6]){ (__sl)a, (__sl)b, (__sl)c, (__sl)d, (__sl)e, (__sl)f }))
 #define __socketcall_cp(nm,a,b,c,d,e,f) syscall_cp(SYS_socketcall, __SC_##nm, \
-    ((long [6]){ (long)a, (long)b, (long)c, (long)d, (long)e, (long)f }))
+    ((__sl [6]){ (__sl)a, (__sl)b, (__sl)c, (__sl)d, (__sl)e, (__sl)f }))
 #endif
 
 /* fixup legacy 16-bit junk */

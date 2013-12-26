@@ -1,6 +1,13 @@
 #include "pthread_impl.h"
+#ifdef __ILP32__
+#define __syscall_long long long
+#else
+#define __syscall_long long long
+#endif
 
-static long sccp(long nr, long u, long v, long w, long x, long y, long z)
+static __syscall_long sccp(__syscall_long nr, __syscall_long u,
+                           __syscall_long v, __syscall_long w,
+                           __syscall_long x, __syscall_long y, __syscall_long z)
 {
 	return (__syscall)(nr, u, v, w, x, y, z);
 }

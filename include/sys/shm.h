@@ -33,21 +33,27 @@ extern "C" {
 #define SHM_HUGETLB 04000
 #define SHM_NORESERVE 010000
 
+#ifdef __ILP32__ /* x32 */
+#define __syscall_long long long
+#else
+#define __syscall_long long
+#endif
+
 struct shminfo {
-	unsigned long shmmax, shmmin, shmmni, shmseg, shmall, __unused[4];
+	unsigned __syscall_long shmmax, shmmin, shmmni, shmseg, shmall, __unused[4];
 };
 
 struct shm_info {
 	int used_ids;
-	unsigned long shm_tot, shm_rss, shm_swp;
+	unsigned __syscall_long shm_tot, shm_rss, shm_swp;
 #ifdef _GNU_SOURCE
-	unsigned long swap_attempts, swap_successes;
+	unsigned __syscall_long swap_attempts, swap_successes;
 #else
-	unsigned long __reserved[2];
+	unsigned __syscall_long __reserved[2];
 #endif
 };
 
-typedef unsigned long shmatt_t;
+typedef unsigned __syscall_long shmatt_t;
 
 void *shmat(int, const void *, int);
 int shmctl(int, int, struct shmid_ds *);

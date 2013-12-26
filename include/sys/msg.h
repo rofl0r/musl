@@ -15,8 +15,13 @@ extern "C" {
 
 #include <bits/alltypes.h>
 
+#ifndef __ILP32__ /* x32 */
 typedef unsigned long msgqnum_t;
 typedef unsigned long msglen_t;
+#else
+typedef unsigned long long msgqnum_t;
+typedef unsigned long long msglen_t;
+#endif
 
 #include <bits/msg.h>
 
@@ -40,7 +45,11 @@ int msgsnd (int, const void *, size_t, int);
 
 #if defined(_GNU_SOURCE) || defined(_BSD_SOURCE)
 struct msgbuf {
+#ifndef __ILP32__ /* x32 */
 	long mtype;
+#else
+	long long mtype;
+#endif
 	char mtext[1];
 };
 #endif

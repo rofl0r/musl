@@ -27,21 +27,27 @@ extern "C" {
 
 #include <endian.h>
 
+#ifdef __ILP32__ /* x32 */
+#define __syscall_long long long
+#else
+#define __syscall_long long
+#endif
+
 struct semid_ds {
 	struct ipc_perm sem_perm;
-	long sem_otime;
-	unsigned long __unused1;
-	long sem_ctime;
-	unsigned long __unused2;
+	__syscall_long sem_otime; /* time_t */
+	unsigned __syscall_long __unused1;
+	__syscall_long sem_ctime; /* time_t */
+	unsigned __syscall_long __unused2;
 #if __BYTE_ORDER == __LITTLE_ENDIAN
 	unsigned short sem_nsems;
-	char __sem_nsems_pad[sizeof(long)-sizeof(short)];
+	char __sem_nsems_pad[sizeof(__syscall_long)-sizeof(short)];
 #else
-	char __sem_nsems_pad[sizeof(long)-sizeof(short)];
+	char __sem_nsems_pad[sizeof(__syscall_long)-sizeof(short)];
 	unsigned short sem_nsems;
 #endif
-	unsigned long __unused3;
-	unsigned long __unused4;
+	unsigned __syscall_long __unused3;
+	unsigned __syscall_long __unused4;
 };
 
 #define _SEM_SEMUN_UNDEFINED 1

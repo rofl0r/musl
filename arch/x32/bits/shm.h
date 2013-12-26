@@ -9,7 +9,7 @@ struct shmid_ds
 	time_t shm_ctime;
 	pid_t shm_cpid;
 	pid_t shm_lpid;
-	unsigned long shm_nattch;
-	unsigned long __pad1;
-	unsigned long __pad2;
+	unsigned long long shm_nattch;
+	unsigned long long __pad1;
+	unsigned long long __pad2;
 };

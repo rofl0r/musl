@@ -2,10 +2,10 @@
 #ifdef __ILP32__
 #define __syscall_long long long
 #else
-#define __syscall_long long long
+#define __syscall_long long
 #endif
 
-static __syscall_long sccp(__syscall_long nr, __syscall_long u,
+static long sccp(__syscall_long nr, __syscall_long u,
                            __syscall_long v, __syscall_long w,
                            __syscall_long x, __syscall_long y, __syscall_long z)
 {

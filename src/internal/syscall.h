@@ -11,8 +11,15 @@ __attribute__((visibility("protected")))
 #define __sl long
 #endif
 
-__sl __syscall_ret(unsigned __sl), __syscall(__sl, ...),
+long __syscall_ret(unsigned long), __syscall(__sl, ...),
 	__syscall_cp(__sl, __sl, __sl, __sl, __sl, __sl, __sl);
+
+#undef __sl
+#ifdef __ILP32__
+#define __sl unsigned long
+#else
+#define __sl long
+#endif
 
 #include <sys/syscall.h>
 #include "syscall_arch.h"

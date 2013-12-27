@@ -8,14 +8,15 @@ void __cancel()
 	pthread_exit(PTHREAD_CANCELED);
 }
 
+#undef __sl
 #ifdef __ILP32__
 #define __sl long long
 #else
 #define __sl long
 #endif
-__sl __syscall_cp_asm(volatile void *, __sl, __sl, __sl, __sl, __sl, __sl, __sl);
+long __syscall_cp_asm(volatile void *, __sl, __sl, __sl, __sl, __sl, __sl, __sl);
 
-__sl (__syscall_cp)(__sl nr, __sl u, __sl v, __sl w, __sl x, __sl y, __sl z)
+long (__syscall_cp)(__sl nr, __sl u, __sl v, __sl w, __sl x, __sl y, __sl z)
 {
 	pthread_t self;
 	__sl r;

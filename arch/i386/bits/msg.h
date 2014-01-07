@@ -1,3 +1,6 @@
+typedef unsigned long msgqnum_t;
+typedef unsigned long msglen_t;
+
 struct msqid_ds
 {
 	struct ipc_perm msg_perm;

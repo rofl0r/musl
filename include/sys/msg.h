@@ -14,10 +14,6 @@ extern "C" {
 #define __NEED_ssize_t
 
 #include <bits/alltypes.h>
-
-typedef unsigned long msgqnum_t;
-typedef unsigned long msglen_t;
-
 #include <bits/msg.h>
 
 #define __msg_cbytes msg_cbytes

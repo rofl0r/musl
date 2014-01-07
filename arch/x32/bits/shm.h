@@ -13,3 +13,15 @@ struct shmid_ds
 	unsigned long long __pad1;
 	unsigned long long __pad2;
 };
+
+struct shminfo {
+	unsigned long long shmmax, shmmin, shmmni, shmseg, shmall, __unused[4];
+};
+
+struct shm_info {
+	int __used_ids;
+	unsigned long long shm_tot, shm_rss, shm_swp;
+	unsigned long long __swap_attempts, __swap_successes;
+};
+
+typedef unsigned long long shmatt_t;

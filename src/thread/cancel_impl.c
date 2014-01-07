@@ -1,4 +1,5 @@
 #include "pthread_impl.h"
+#include "syscall.h"
 
 void __cancel()
 {
@@ -8,9 +9,9 @@ void __cancel()
 	pthread_exit(PTHREAD_CANCELED);
 }
 
-long __syscall_cp_asm(volatile void *, long, long, long, long, long, long, long);
+long __syscall_cp_asm(volatile void *, __sca, __sca, __sca, __sca, __sca, __sca, __sca);
 
-long (__syscall_cp)(long nr, long u, long v, long w, long x, long y, long z)
+long (__syscall_cp)(__sca nr, __sca u, __sca v, __sca w, __sca x, __sca y, __sca z)
 {
 	pthread_t self;
 	long r;

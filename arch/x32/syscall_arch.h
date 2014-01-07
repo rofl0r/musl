@@ -1,6 +1,9 @@
 #define __SYSCALL_LL_E(x) (x)
 #define __SYSCALL_LL_O(x) (x)
 
+#define __scc(X) (unsigned long long) (X)
+#define __sca long long
+
 static __inline long __syscall0(long long n)
 {
 	unsigned long ret;

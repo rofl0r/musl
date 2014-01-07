@@ -15,14 +15,13 @@ struct shmid_ds
 };
 
 struct shminfo {
-	unsigned long shmmax, shmmin, shmmni, shmseg, shmall, __unused[4];
+	unsigned long long shmmax, shmmin, shmmni, shmseg, shmall, __unused[4];
 };
 
 struct shm_info {
 	int __used_ids;
-	unsigned long shm_tot, shm_rss, shm_swp;
-	unsigned long __swap_attempts, __swap_successes;
+	unsigned long long shm_tot, shm_rss, shm_swp;
+	unsigned long long __swap_attempts, __swap_successes;
 };
 
-typedef unsigned long shmatt_t;
-
+typedef unsigned long long shmatt_t;

@@ -17,3 +17,11 @@ struct msqid_ds
 	pid_t msg_lrpid;
 	unsigned long __unused[2];
 };
+
+#if defined(_GNU_SOURCE) || defined(_BSD_SOURCE)
+struct msgbuf {
+	long mtype;
+	char mtext[1];
+};
+#endif
+

@@ -2,7 +2,7 @@
  * by the corresponding correctly-sized userspace types. */
 
 struct stat {
-	unsigned long st_dev;
+	unsigned long long st_dev;
 	ino_t st_ino;
 	nlink_t st_nlink;
 
@@ -18,5 +18,5 @@ struct stat {
 	struct timespec st_atim;
 	struct timespec st_mtim;
 	struct timespec st_ctim;
-	long __unused[3];
+	long long __unused[3];
 };

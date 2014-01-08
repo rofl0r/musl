@@ -1,7 +1,7 @@
 #define __SYSCALL_LL_E(x) (x)
 #define __SYSCALL_LL_O(x) (x)
 
-#define __scc(X) (unsigned long long) (X)
+#define __scc(X) sizeof(1?(X):0) <= sizeof(void *) ? (unsigned long) (X) : (long long) (X)
 #define __sca long long
 
 static __inline long __syscall0(long long n)

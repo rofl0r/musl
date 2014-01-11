@@ -19,14 +19,9 @@ struct shminfo {
 };
 
 struct shm_info {
-	int used_ids;
+	int __used_ids;
 	unsigned long long shm_tot, shm_rss, shm_swp;
-#ifdef _GNU_SOURCE
-	unsigned long long swap_attempts, swap_successes;
-#else
-	unsigned long long __reserved[2];
-#endif
+	unsigned long long __swap_attempts, __swap_successes;
 };
 
 typedef unsigned long long shmatt_t;
-

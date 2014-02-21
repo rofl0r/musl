@@ -8,6 +8,14 @@ __cp_begin:
 	mov (%rdi),%eax
 	test %eax,%eax
 	jnz __cancel
+	jmp __x32_syscall_cp_fixup
+.global __cp_end
+__cp_end:
+	ret
+
+.global __syscall_cp_internal
+.type   __syscall_cp_internal,@function
+__syscall_cp_internal:
 	mov %rdi,%r11
 	mov %rsi,%rax
 	mov %rdx,%rdi
@@ -18,6 +26,4 @@ __cp_begin:
 	mov 16(%rsp),%r9
 	mov %r11,8(%rsp)
 	syscall
-.global __cp_end
-__cp_end:
 	ret

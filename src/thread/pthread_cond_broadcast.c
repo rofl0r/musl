@@ -29,7 +29,7 @@ int pthread_cond_broadcast(pthread_cond_t *c)
 	 * that the calling thread holds the mutex. */
 	__syscall(SYS_futex, &c->_c_seq, FUTEX_REQUEUE,
 		!m->_m_type || (m->_m_lock&INT_MAX)!=pthread_self()->tid,
-		INT_MAX, &m->_m_lock, 0);
+		INT_MAX, &m->_m_lock);
 
 out:
 	a_store(&c->_c_lock, 0);

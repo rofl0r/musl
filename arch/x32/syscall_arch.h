@@ -54,7 +54,7 @@ static __inline long __syscall4(long long n, long long a1, long long a2, long lo
 	register long long r10 __asm__("r10") = a4;
 	switch (n) {
 	case SYS_futex:
-		if(a2 == 0 /* FUTEX_WAIT*/) {
+		if((a2 & (~128 /* FUTEX_PRIVATE_FLAG */)) == 0 /* FUTEX_WAIT */) {
 			if(r10) r10 = (unsigned long) (&(struct __timespec_kernel) {
 			.tv_sec = __tsc(r10)->tv_sec, .tv_nsec = __tsc(r10)->tv_nsec});
 		}
@@ -83,7 +83,7 @@ static __inline long __syscall5(long long n, long long a1, long long a2, long lo
 	register long long r8 __asm__("r8") = a5;
 	switch (n) {
 	case SYS_futex:
-		if(a2 == 0 /* FUTEX_WAIT*/) {
+		if((a2 & (~128 /* FUTEX_PRIVATE_FLAG */)) == 0 /* FUTEX_WAIT */) {
 			if(r10) r10 = (unsigned long) (&(struct __timespec_kernel) {
 			.tv_sec = __tsc(r10)->tv_sec, .tv_nsec = __tsc(r10)->tv_nsec});
 		}
@@ -106,7 +106,7 @@ static __inline long __syscall6(long long n, long long a1, long long a2, long lo
 	register long long r9 __asm__("r9") = a6;
 	switch (n) {
 	case SYS_futex:
-		if(a2 == 0 /* FUTEX_WAIT*/) {
+		if((a2 & (~128 /* FUTEX_PRIVATE_FLAG */)) == 0 /* FUTEX_WAIT */) {
 			if(r10) r10 = (unsigned long) (&(struct __timespec_kernel) {
 			.tv_sec = __tsc(r10)->tv_sec, .tv_nsec = __tsc(r10)->tv_nsec});
 		}

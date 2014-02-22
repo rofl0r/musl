@@ -61,18 +61,18 @@ fegetround:
 .type fegetenv,@function
 fegetenv:
 	xor %eax,%eax
-	fnstenv (%rdi)
-	stmxcsr 28(%rdi)
+	fnstenv (%edi)
+	stmxcsr 28(%edi)
 	ret
 
 .global fesetenv
 .type fesetenv,@function
 fesetenv:
 	xor %eax,%eax
-	inc %rdi
+	inc %edi
 	jz 1f
-	fldenv -1(%rdi)
-	ldmxcsr 27(%rdi)
+	fldenv -1(%edi)
+	ldmxcsr 27(%edi)
 	ret
 1:	push %rax
 	push %rax
